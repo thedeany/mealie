@@ -17,7 +17,7 @@ export const routes = [
   { path: "/meal-plan/this-week", component: ThisWeek },
   {
     path: "/meal-plan/today",
-    beforeEnter:  async (_to, _from, next) => {
+    beforeEnter: async (_to, _from, next) => {
       await todaysMealRoute().then((redirect) => {
         next(redirect);
       });

@@ -23,7 +23,7 @@ Frontend
 - [ ] Recipe Editor Data Validation Client Side
 - [x] Favicon
 - [x] Rename Window
-- [ ] Add version indicator and notification for new version available
+- [x] Add version indicator and notification for new version available
 - [ ] Enhanced Search Functionality
 - [ ] Organize Home Page my Category, ideally user selectable.
 
@@ -42,6 +42,9 @@ Backend
 ## v0.0.2
 
 General
+- Fixed add recipe button on mobile 
+- Allow saving incomplete meals
+- 
 - Fixed opacity issues with marked steps - [mtoohey31](https://github.com/mtoohey31)
 - Improved documentation
 - Fixed hot-reloading development environment - [grssmnn](https://github.com/grssmnn)

@@ -1,46 +1,59 @@
 <template>
-  <v-card id="myRecipe">
-    <v-img
-      height="400"
-      :src="getImage(recipeDetails.image)"
-      class="d-print-none"
-      :key="imageKey"
-    >
-    </v-img>
-    <ButtonRow
-      :open="showIcons"
-      @json="jsonEditor = true"
-      @editor="
-        jsonEditor = false;
-        form = true;
-      "
-      @save="saveRecipe"
-      @delete="deleteRecipe"
-    />
+  <div>
+    <PrintRecipe v-if="print" :recipe="recipeDetails" @exit="print = false" />
+    <v-card v-else id="myRecipe">
+      <v-img
+        height="400"
+        :src="getImage(recipeDetails.image)"
+        class="d-print-none"
+        :key="imageKey"
+      >
+        <v-btn
+          absolute
+          right
+          color="accent lighten-1 "
+          class="mt-2 mr-n2 image-action"
+          @click="print = true"
+        >
+          <v-icon> mdi-printer </v-icon>
+        </v-btn>
+      </v-img>
+      <ButtonRow
+        :open="showIcons"
+        @json="jsonEditor = true"
+        @editor="
+          jsonEditor = false;
+          form = true;
+        "
+        @save="saveRecipe"
+        @delete="deleteRecipe"
+      />
 
-    <ViewRecipe
-      v-if="!form"
-      :name="recipeDetails.name"
-      :ingredients="recipeDetails.recipeIngredient"
-      :description="recipeDetails.description"
-      :instructions="recipeDetails.recipeInstructions"
-      :tags="recipeDetails.tags"
-      :categories="recipeDetails.categories"
-      :notes="recipeDetails.notes"
-      :rating="recipeDetails.rating"
-      :yields="recipeDetails.recipeYield"
-      :orgURL="recipeDetails.orgURL"
-    />
-    <VJsoneditor
-      @error="logError()"
-      class="mt-10"
-      v-else-if="showJsonEditor"
-      v-model="recipeDetails"
-      height="1500px"
-      :options="jsonEditorOptions"
-    />
-    <EditRecipe v-else v-model="recipeDetails" @upload="getImageFile" />
-  </v-card>
+      <ViewRecipe
+        v-if="!form"
+        :name="recipeDetails.name"
+        :ingredients="recipeDetails.recipeIngredient"
+        :description="recipeDetails.description"
+        :instructions="recipeDetails.recipeInstructions"
+        :tags="recipeDetails.tags"
+        :categories="recipeDetails.categories"
+        :notes="recipeDetails.notes"
+        :rating="recipeDetails.rating"
+        :yields="recipeDetails.recipeYield"
+        :orgURL="recipeDetails.orgURL"
+      />
+      <VJsoneditor
+        @error="logError()"
+        class="mt-10"
+        v-else-if="showJsonEditor"
+        v-model="recipeDetails"
+        height="1500px"
+        :options="jsonEditorOptions"
+      />
+      <EditRecipe v-else v-model="recipeDetails" @upload="getImageFile" />
+      <br />
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -50,6 +63,7 @@ import VJsoneditor from "v-jsoneditor";
 import ViewRecipe from "./RecipeEditor/ViewRecipe";
 import EditRecipe from "./RecipeEditor/EditRecipe";
 import ButtonRow from "./UI/ButtonRow";
+import PrintRecipe from "./RecipeEditor/PrintRecipe";
 
 export default {
   components: {
@@ -57,10 +71,12 @@ export default {
     ViewRecipe,
     EditRecipe,
     ButtonRow,
+    PrintRecipe,
   },
   data() {
     return {
       // CurrentRecipe: this.$route.params.recipe,
+      print: false,
       form: false,
       jsonEditor: false,
       jsonEditorOptions: {
@@ -154,5 +170,8 @@ export default {
 }
 .disabled-card {
   opacity: 0.5;
+}
+.image-action {
+  opacity: 0.9;
 }
 </style>
