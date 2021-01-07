@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="print">
     <PrintRecipe v-if="print" :recipe="recipeDetails" @exit="print = false" />
     <v-card v-else id="myRecipe">
       <v-img
@@ -173,5 +173,13 @@ export default {
 }
 .image-action {
   opacity: 0.9;
+}
+@media print {
+  body {
+    transform: scale(0.8);
+  }
+  table {
+    page-break-inside: avoid;
+  }
 }
 </style>

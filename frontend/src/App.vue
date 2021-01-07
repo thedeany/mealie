@@ -1,10 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar dense app color="primary" dark class="d-print-none">
+    <v-app-bar dense app color="primary" dark class="d-print-none no-print">
       <v-btn @click="$router.push('/')" icon class="d-flex align-center">
-        <v-icon size="40" >
-          mdi-silverware-variant
-        </v-icon>
+        <v-icon size="40"> mdi-silverware-variant </v-icon>
       </v-btn>
       <div btn class="pl-2">
         <v-toolbar-title @click="$router.push('/')">Mealie</v-toolbar-title>
@@ -85,5 +83,14 @@ body::-webkit-scrollbar-track {
 
 body::-webkit-scrollbar-thumb {
   background: black;
+}
+
+@media print {
+  .v-content {
+    padding: 0 !important;
+  }
+  .no-print {
+    display: none;
+  }
 }
 </style>

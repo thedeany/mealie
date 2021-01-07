@@ -39,32 +39,69 @@
         </v-row>
       </v-card-text>
     </v-card>
-    <v-card flat ref="printView">
-      <v-card-title>
-        {{ recipe.name }}
-      </v-card-title>
+
+    <v-card flat>
+      <v-row dense align="center">
+        <v-col md="10" sm="10">
+          <v-card flat>
+            <v-card-title> {{ recipe.name }} </v-card-title>
+
+            <v-card-text> {{ recipe.description }} </v-card-text>
+
+            <v-divider></v-divider>
+          </v-card>
+        </v-col>
+        <v-col md="1" sm="1" justify-end>
+          <v-img :src="getImage(recipe.image)" max-height="200" max-width="300">
+          </v-img>
+        </v-col>
+      </v-row>
+    </v-card>
+    <v-card flat align>
       <v-card-text>
-        {{ recipe.description }}
-      </v-card-text>
-      <v-card-text>
+        <v-row class="mt-n6">
+          <v-col>
+            <v-btn
+              v-if="recipe.recipeYield"
+              dense
+              small
+              :hover="false"
+              type="label"
+              :ripple="false"
+              elevation="0"
+              color="secondary darken-1"
+              class="rounded-sm static"
+            >
+              {{ recipe.recipeYield }}
+            </v-btn>
+          </v-col>
+          <v-rating
+            class="mr-2 align-end static"
+            color="secondary darken-1"
+            background-color="secondary lighten-3"
+            length="5"
+            :value="recipe.rating"
+          ></v-rating>
+        </v-row>
+        <h2 class="mt-1">Ingredients</h2>
         <v-row>
-          <v-col cols="12" sm="12" md="4" lg="4">
-            <h2>Ingredients</h2>
-
-            <v-list dense class="ml-n4">
-              <v-list-item
-                v-for="(ingredient, index) in recipe.recipeIngredient"
-                :key="generateKey('ingredient', index)"
-                hide-details
-                :label="ingredient"
-              >
-                <v-list-item-icon class="mr-1">
-                  <v-icon> mdi-minus </v-icon>
-                </v-list-item-icon>
-
-                {{ ingredient }}
-              </v-list-item>
-            </v-list>
+          <v-list dense class="column-wrapper align-start">
+            <v-list-item
+              v-for="(ingredient, index) in recipe.recipeIngredient"
+              :key="generateKey('ingredient', index)"
+              hide-details
+              class="mb-n3 print-text"
+              :label="ingredient"
+            >
+              <v-list-item-icon class="mr-1">
+                <v-icon> mdi-minus </v-icon>
+              </v-list-item-icon>
+              {{ ingredient }}
+            </v-list-item>
+          </v-list>
+        </v-row>
+        <v-row dense>
+          <v-col cols="12">
             <div v-if="recipe.categories[0]">
               <h2 class="mt-4">Categories</h2>
               <v-chip
@@ -104,7 +141,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col cols="12" sm="12" md="8" lg="8">
+          <v-col cols="12">
             <h2 class="mb-4">Instructions</h2>
 
             <v-card
@@ -136,6 +173,11 @@ export default {
     };
   },
   methods: {
+    getImage(image) {
+      if (image) {
+        return utils.getImageURL(image) + "?rnd=" + this.imageKey;
+      }
+    },
     generateKey(item, index) {
       return utils.generateUniqueKey(item, index);
     },
@@ -149,5 +191,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.column-wrapper {
+  column-count: 2;
+}
 </style>

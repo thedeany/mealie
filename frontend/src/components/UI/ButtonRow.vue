@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar class="card-btn" flat height="0" extension-height="0">
+  <v-toolbar class="card-btn d-print-none" flat height="0" extension-height="0">
     <template v-slot:extension>
       <v-col></v-col>
       <div v-if="open">
